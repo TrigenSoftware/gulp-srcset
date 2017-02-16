@@ -38,7 +38,7 @@ Target widths to generate, value less or equal 1 will be detected as multiplier.
 
 Default: `[1]`
 
-### `String|Array<String> rule.format`
+#### `String|Array<String> rule.format`
 
 Target formats to generate, supports: `"svg"`, `"gif"`, `"jpeg"`, `"png"` and `"webp"`.
 
@@ -46,13 +46,13 @@ For converting are available only `"jpeg"`, `"png"` and `"webp"`.
 
 Default: ```[`format of source image`]```
 
-### `String rule.postfix(Number calculatedWidth, Number width)`
+#### `String rule.postfix(Number calculatedWidth, Number width)`
 
 Function to generate postfix for file name.
 
 Default: ```(calculatedWidth, width) => width == 1 ? '' : `@${calculatedWidth}w````
 
-### `Object rule.processing`
+#### `Object rule.processing`
 
 Object with [Sharp configs](http://sharp.readthedocs.io/en/stable/api-output/) for each supported format. Sharp used as tool for resizing and converting images.
 
@@ -69,7 +69,7 @@ Default:
 }
 ```
 
-### `Object rule.optimization`
+#### `Object rule.optimization`
 
 Object with [imagemin](https://www.npmjs.com/package/imagemin) plugins for each format. Imagemin used as tool for images optimization.
 
@@ -92,13 +92,13 @@ Default:
 
 Object with common config.
 
-### `String options.postfix(Number calculatedWidth, Number width)`
+#### `String options.postfix(Number calculatedWidth, Number width)`
 
 Function to generate postfix for file name.
 
 Default: ```(calculatedWidth, width) => width == 1 ? '' : `@${calculatedWidth}w````
 
-### `Object options.processing`
+#### `Object options.processing`
 
 Object with [Sharp configs](http://sharp.readthedocs.io/en/stable/api-output/) for each supported format. Sharp used as tool for resizing and converting images.
 
@@ -115,7 +115,7 @@ Default:
 }
 ```
 
-### `Object options.optimization`
+#### `Object options.optimization`
 
 Object with [imagemin](https://www.npmjs.com/package/imagemin) plugins for each format. Imagemin used as tool for images optimization.
 
