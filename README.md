@@ -51,7 +51,7 @@ Default: ```[`format of source image`]```
 
 Function to generate postfix for file name.
 
-Default: ```(calculatedWidth, width) => width == 1 ? '' : `@${calculatedWidth}w````
+Default: ```(calculatedWidth, width) => width == 1 ? '' : `@${calculatedWidth}w` ```
 
 #### `Object rule.processing`
 
