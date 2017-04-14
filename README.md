@@ -17,9 +17,9 @@ yarn add -D gulp-srcset
 
 # API
 
-### `gulpSrcsetPlugin(rules [, options])`
+## `gulpSrcsetPlugin(rules [, options])`
 
-#### `Array<Object rule> rules`
+### `Array<Object rule> rules`
 
 Array of rules to generate variants of image.
 
@@ -89,7 +89,7 @@ Default:
 }
 ```
 
-#### `Object options`
+### `Object options`
 
 Object with common config.
 
@@ -97,7 +97,7 @@ Object with common config.
 
 Function to generate postfix for file name.
 
-Default: ```(calculatedWidth, width) => width == 1 ? '' : `@${calculatedWidth}w````
+Default: ```(calculatedWidth, width) => width == 1 ? '' : `@${calculatedWidth}w` ```
 
 #### `Object options.processing`
 
