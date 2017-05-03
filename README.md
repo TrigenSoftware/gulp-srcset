@@ -29,7 +29,7 @@ There is support of 3 types of matchers:
 
 1. Glob pattern of file path/name.
 2. Media query to match image by size.
-3. Function with `path`, `size` and `file` arguments, where `path` is String, `size` is object `{ width, height}` and `file` is instance of `Vinyl`.
+3. Function with `path`, `size` and `file` arguments, where `path` is String, `size` is object `{ width, height }` and `file` is instance of `Vinyl`.
 
 #### `Number|Array<Number> rule.width`
 
@@ -89,6 +89,12 @@ Default:
 }
 ```
 
+#### `Boolean rule.skipOptimization`
+
+Option to skip optimization.
+
+Default: `false`
+
 ### `Object options`
 
 Object with common config.
@@ -134,6 +140,12 @@ Default:
 	svg:  svgoPlugin()
 }
 ```
+
+#### `Boolean options.skipOptimization`
+
+Option to skip optimization.
+
+Default: `false`
 
 # Example 
 [`gulpfile.js`](https://github.com/TrigenSoftware/gulp-srcset/tree/master/example)

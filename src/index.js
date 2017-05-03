@@ -4,9 +4,10 @@ import through from 'through2';
 export default function plugin(rules = [], inputOptions = {}) {
 
 	const options = Object.assign({
-		processing:   false,
-		optimization: false,
-		postfix:      false
+		processing:       false,
+		optimization:     false,
+		postfix:          false,
+		skipOptimization: false
 	}, inputOptions);
 
 	const srcset = new SrcsetGenerator(options);
@@ -27,7 +28,15 @@ export default function plugin(rules = [], inputOptions = {}) {
 				)
 			)
 		))
-			.then(() => next())
+			.then((results) => {
+
+				if (results.every(_ => _ == false)) {
+					next(null, file);
+					return;
+				}
+
+				next();
+			})
 			.catch(next);
 	}
 
@@ -35,11 +44,6 @@ export default function plugin(rules = [], inputOptions = {}) {
 }
 
 function match(srcset, file, matchers, ifMatches) {
-
-	if (!matchers) {
-		return ifMatches();
-	}
-
 	return srcset.matchImage(file, matchers)
 		.then(matches => (matches
 			? ifMatches()

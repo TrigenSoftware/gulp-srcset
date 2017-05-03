@@ -1,6 +1,6 @@
 {
   "name": "gulp-srcset",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Highly customizable plugin to generating responsive images.",
   "engines": {
     "node": ">=4.0.0"

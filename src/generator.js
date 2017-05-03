@@ -57,17 +57,23 @@ export default class SrcsetGenerator {
 
 	postfix = (width, mul) => (mul === 1 ? '' : `@${width}w`);
 
+	skipOptimization = false;
+
 	constructor(config = {}) {
 
 		if (typeof config == 'object') {
 
-			const { processing, optimization, postfix } = config;
+			const { processing, optimization, postfix, skipOptimization } = config;
 
 			Object.assign(this.processing, processing);
 			Object.assign(this.optimization, optimization);
 
 			if (typeof postfix == 'function') {
 				this.postfix = postfix;
+			}
+
+			if (typeof skipOptimization == 'boolean') {
+				this.skipOptimization = skipOptimization;
 			}
 		}
 	}
@@ -86,11 +92,12 @@ export default class SrcsetGenerator {
 		}
 
 		const config = Object.assign({
-			format:       [],
-			width:        [],
-			postfix:      false,
-			processing:   false,
-			optimization: false
+			format:           [],
+			width:            [],
+			postfix:          false,
+			processing:       false,
+			optimization:     false,
+			skipOptimization: this.skipOptimization
 		}, _config);
 
 		const { TypeIsSupported, Extensions } = SrcsetGenerator,
@@ -124,7 +131,8 @@ export default class SrcsetGenerator {
 			widths.push(1);
 		}
 
-		const onlyOptimize = Extensions.svg.test(sourceType)
+		const { skipOptimization } = config,
+			onlyOptimize = Extensions.svg.test(sourceType)
 				|| Extensions.gif.test(sourceType),
 			processors = [];
 
@@ -135,10 +143,16 @@ export default class SrcsetGenerator {
 			}
 
 			if (onlyOptimize) {
-				processors.push(
-					this._optimizeImage(source, config)
-						.then(triggerPush)
-				);
+
+				if (skipOptimization) {
+					triggerPush(source);
+				} else {
+					processors.push(
+						this._optimizeImage(source, config)
+							.then(triggerPush)
+					);
+				}
+
 			} else {
 				widths.forEach((width) => {
 
@@ -146,12 +160,16 @@ export default class SrcsetGenerator {
 						throw new Error(`Invalid width parameter.`);
 					}
 
-					processors.push(
-						this._attachMetadata(source)
-							.then(image => this._processImage(image, type, width, config))
-							.then(image => this._optimizeImage(image, config))
-							.then(triggerPush)
-					);
+					let proc = this._attachMetadata(source)
+						.then(image => this._processImage(image, type, width, config));
+
+					if (!skipOptimization) {
+						proc = proc.then(image => this._optimizeImage(image, config));
+					}
+
+					proc = proc.then(triggerPush);
+
+					processors.push(proc);
 				});
 			}
 		});
@@ -165,10 +183,21 @@ export default class SrcsetGenerator {
 	 * @param  {Array<String|Function>} matchers
 	 * @return {Promise<Boolean>}
 	 */
-	matchImage(source, matcherOrMatchers) {
+	matchImage(source, matcherOrMatchers = false) {
 
 		if (!Vinyl.isVinyl(source) || source.isNull() || source.isStream()) {
 			throw new Error('Invalid source.');
+		}
+
+		const { TypeIsSupported } = SrcsetGenerator,
+			sourceType = source.extname.replace(/^\./, '');
+
+		if (!TypeIsSupported(sourceType)) {
+			return Promise.resolve(false);
+		}
+
+		if (!matcherOrMatchers) {
+			return Promise.resolve(true);
 		}
 
 		const matchers = Array.isArray(matcherOrMatchers)
