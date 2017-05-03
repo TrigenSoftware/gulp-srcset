@@ -6,7 +6,7 @@ gulp.task('images', () =>
 		.pipe(srcset([{
 			match:  '(min-width: 3000px)',
 			width:  [1, 1920, 1280, 720, 560, 320],
-			format: ['jpg', 'webp'],
+			format: ['jpg', 'webp']
 		}]))
 		.pipe(gulp.dest('dist'))
 );
