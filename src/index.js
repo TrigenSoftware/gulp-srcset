@@ -1,5 +1,10 @@
+import { cpus } from 'os';
+import through from 'through2-concurrent';
 import SrcsetGenerator from './generator';
-import through from 'through2';
+
+const throughOptions = {
+	maxConcurrency: cpus().length
+};
 
 export default function plugin(rules = [], inputOptions = {}) {
 
@@ -12,41 +17,42 @@ export default function plugin(rules = [], inputOptions = {}) {
 
 	const srcset = new SrcsetGenerator(options);
 
-	function each(file, enc, next) {
+	async function each(file, enc, next) {
 
 		if (file.isNull() || file.isStream()) {
 			next(null, file);
 			return;
 		}
 
-		Promise.all(rules.map(rule =>
-			match(srcset, file, rule.match, () =>
-				srcset.generate(
-					file,
-					rule,
-					this.push.bind(this)
-				)
-			)
-		))
-			.then((results) => {
+		try {
 
-				if (results.every(_ => _ == false)) {
-					next(null, file);
-					return;
-				}
+			const results = await Promise.all(
+				rules.map(async (rule) => {
 
-				next();
-			})
-			.catch(next);
+					const matches = await srcset.matchImage(file, rule.match);
+
+					if (matches) {
+						await srcset.generate(file, rule, this.push.bind(this));
+						return true;
+					}
+
+					return false;
+				})
+			);
+
+			if (results.every(_ => !_)) {
+				next(null, file);
+				return;
+			}
+
+			next();
+			return;
+
+		} catch (err) {
+			next(err);
+			return;
+		}
 	}
 
-	return through.obj(each);
-}
-
-function match(srcset, file, matchers, ifMatches) {
-	return srcset.matchImage(file, matchers)
-		.then(matches => (matches
-			? ifMatches()
-			: false
-		));
+	return through.obj(throughOptions, each);
 }

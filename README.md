@@ -1,6 +1,17 @@
-[![NPM](https://nodei.co/npm/gulp-srcset.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gulp-srcset/)
-
 # gulp-srcset
+
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependency status][deps]][deps-url]
+
+[npm]: https://img.shields.io/npm/v/gulp-srcset.svg
+[npm-url]: https://www.npmjs.com/package/gulp-srcset
+
+[node]: https://img.shields.io/node/v/gulp-srcset.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/david/TrigenSoftware/gulp-srcset.svg
+[deps-url]: https://david-dm.org/TrigenSoftware/gulp-srcset
 
 Highly customizable plugin to generating responsive images.
 
@@ -9,9 +20,7 @@ Highly customizable plugin to generating responsive images.
 Install with npm
 ```bash
 npm i -D gulp-srcset
-```
-or
-```bash
+# or
 yarn add -D gulp-srcset
 ```
 
@@ -163,3 +172,6 @@ gulp.task('images', () =>
 		.pipe(gulp.dest('dist'))
 );
 ```
+
+---
+[![NPM](https://nodei.co/npm/gulp-srcset.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gulp-srcset/)

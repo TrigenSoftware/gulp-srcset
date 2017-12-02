@@ -26,8 +26,8 @@ export default class SrcsetGenerator {
 
 	/**
 	 * Check image type
-	 * @param  {String} type
-	 * @return {Boolean}
+	 * @param  {String} type Image extension without dot.
+	 * @return {Boolean}     Image type is supported or not.
 	 */
 	static TypeIsSupported(type) {
 		return SrcsetGenerator.ExtensionsList.some(_ => _.test(type));
@@ -80,10 +80,10 @@ export default class SrcsetGenerator {
 
 	/**
 	 * Create set of sources form original image.
-	 * @param  {Vinyl}    source
-	 * @param  {Object}   config
-	 * @param  {Function} push
-	 * @return {Promise<Array<Vinyl>>}
+	 * @param  {Vinyl}    source       Source image file.
+	 * @param  {Object}   _config      Image handle config.
+	 * @param  {Function} push         Will called on each file.
+	 * @return {Promise<Array<Vinyl>>} Results of handling.
 	 */
 	generate(source, _config = {}, push = false) {
 
@@ -133,10 +133,9 @@ export default class SrcsetGenerator {
 
 		const { skipOptimization } = config,
 			onlyOptimize = Extensions.svg.test(sourceType)
-				|| Extensions.gif.test(sourceType),
-			processors = [];
+				|| Extensions.gif.test(sourceType);
 
-		outputTypes.forEach((type) => {
+		const processors = outputTypes.map(async (type) => {
 
 			if (!TypeIsSupported(type)) {
 				throw new Error(`"${type}" is not supported.`);
@@ -145,33 +144,33 @@ export default class SrcsetGenerator {
 			if (onlyOptimize) {
 
 				if (skipOptimization) {
-					triggerPush(source);
-				} else {
-					processors.push(
-						this._optimizeImage(source, config)
-							.then(triggerPush)
-					);
+					return triggerPush(source);
 				}
 
-			} else {
-				widths.forEach((width) => {
+				return triggerPush(
+					await this._optimizeImage(source, config)
+				);
 
-					if (typeof width != 'number') {
-						throw new Error(`Invalid width parameter.`);
-					}
-
-					let proc = this._attachMetadata(source)
-						.then(image => this._processImage(image, type, width, config));
-
-					if (!skipOptimization) {
-						proc = proc.then(image => this._optimizeImage(image, config));
-					}
-
-					proc = proc.then(triggerPush);
-
-					processors.push(proc);
-				});
 			}
+
+			const processors = widths.map(async (width) => {
+
+				if (typeof width != 'number') {
+					throw new Error(`Invalid width parameter.`);
+				}
+
+				let image = await this._attachMetadata(source);
+
+				image = await this._processImage(image, type, width, config);
+
+				if (!skipOptimization) {
+					image = await this._optimizeImage(image, config);
+				}
+
+				return triggerPush(image);
+			});
+
+			return Promise.all(processors);
 		});
 
 		return Promise.all(processors);
@@ -179,11 +178,11 @@ export default class SrcsetGenerator {
 
 	/**
 	 * Match image file by path and size
-	 * @param  {Vinyl}                  source
-	 * @param  {Array<String|Function>} matchers
-	 * @return {Promise<Boolean>}
+	 * @param  {Vinyl}                  source            Source image file.
+	 * @param  {Array<String|Function>} matcherOrMatchers Rules to match image file.
+	 * @return {Promise<Boolean>}                         Image is matched or not.
 	 */
-	matchImage(source, matcherOrMatchers = false) {
+	async matchImage(source, matcherOrMatchers = false) {
 
 		if (!Vinyl.isVinyl(source) || source.isNull() || source.isStream()) {
 			throw new Error('Invalid source.');
@@ -193,71 +192,68 @@ export default class SrcsetGenerator {
 			sourceType = source.extname.replace(/^\./, '');
 
 		if (!TypeIsSupported(sourceType)) {
-			return Promise.resolve(false);
+			return false;
 		}
 
 		if (!matcherOrMatchers) {
-			return Promise.resolve(true);
+			return true;
 		}
 
 		const matchers = Array.isArray(matcherOrMatchers)
 			? matcherOrMatchers
 			: [matcherOrMatchers];
 
-		return this._attachMetadata(source).then(() => {
+		await this._attachMetadata(source);
 
-			const { metadata, path } = source;
+		const { metadata, path } = source;
 
-			if (typeof metadata != 'object') {
-				return false;
+		if (typeof metadata != 'object') {
+			return false;
+		}
+
+		const size = {
+			width:  metadata.width,
+			height: metadata.height
+		};
+
+		return matchers.every((funcOrPatternOrMediaQuery) => {
+
+			if (isMediaQuery.test(funcOrPatternOrMediaQuery)) {
+				return mediaQuery.match(funcOrPatternOrMediaQuery, size);
+			} else
+			if (typeof funcOrPatternOrMediaQuery == 'function') {
+				return funcOrPatternOrMediaQuery(path, size, source);
 			}
 
-			const size = {
-				width:  metadata.width,
-				height: metadata.height
-			};
-
-			return matchers.every((funcOrPatternOrMediaQuery) => {
-
-				if (isMediaQuery.test(funcOrPatternOrMediaQuery)) {
-					return mediaQuery.match(funcOrPatternOrMediaQuery, size);
-				} else
-				if (typeof funcOrPatternOrMediaQuery == 'function') {
-					return funcOrPatternOrMediaQuery(path, size, source);
-				} else {
-					return minimatch(path, funcOrPatternOrMediaQuery);
-				}
-			});
+			return minimatch(path, funcOrPatternOrMediaQuery);
 		});
 	}
 
 	/**
 	 * Attach image metadata to the vinyl file.
-	 * @param  {Vinyl} source
-	 * @return {Vinyl}
+	 * @param  {Vinyl} source   Source image file.
+	 * @return {Promise<Vinyl>} Source image file with attached metadata.
 	 */
-	_attachMetadata(source) {
+	async _attachMetadata(source) {
 
 		if (typeof source.metadata == 'object') {
-			return Promise.resolve(source);
+			return source;
 		}
 
-		return Sharp(source.contents).metadata()
-			.then((metadata) => {
-				source.metadata = metadata;
-				return source;
-			});
+		source.metadata = await Sharp(source.contents).metadata();
+
+		return source;
 	}
 
 	/**
 	 * Resize and convert image.
-	 * @param  {Vinyl}   source
-	 * @param  {String}  outputType
-	 * @param  {Boolean} width
-	 * @param  {Object}  config
-	 * @return {Promise<Vinyl>}
+	 * @param  {Vinyl}   source     Source image file.
+	 * @param  {String}  outputType Destination image file format.
+	 * @param  {Number}  width      Aspect ratio multiplier for destination image.
+	 * @param  {Object}  config     Image handle config.
+	 * @return {Promise<Vinyl>}     Destination image file.
 	 */
-	_processImage(source, outputType, width = false, config = {}) {
+	async _processImage(source, outputType, width = false, config = {}) {
 
 		const { Extensions } = SrcsetGenerator,
 			{ metadata } = source,
@@ -286,7 +282,7 @@ export default class SrcsetGenerator {
 
 		if (width == 1 && source.extname == target.extname) {
 			target.contents = source.contents;
-			return Promise.resolve(target);
+			return target;
 		}
 
 		if (Extensions.webp.test(outputType)) {
@@ -299,37 +295,36 @@ export default class SrcsetGenerator {
 			processor.png(processing.png);
 		}
 
-		return processor.toBuffer().then((buffer) => {
-			target.contents = buffer;
-			return target;
-		});
+		target.contents = await processor.toBuffer();
+
+		return target;
 	}
 
 	/**
 	 * Optimize image with imagemin.
-	 * @param  {Vinyl}  source
-	 * @param  {Object} config
-	 * @return {Promise<Vinyl>}
+	 * @param  {Vinyl}  source  Source image file.
+	 * @param  {Object} config  Image handle config.
+	 * @return {Promise<Vinyl>} Destination image file.
 	 */
-	_optimizeImage(source, config = {}) {
+	async _optimizeImage(source, config = {}) {
 
 		const target = source.clone({ contents: false }),
 			optimization = Object.assign({}, this.optimization, config.optimization);
 
-		return Imagemin.buffer(source.contents, {
+		target.contents = await Imagemin.buffer(source.contents, {
 			plugins: [optimization[source.extname.replace(/^\./, '')]]
-		}).then((buffer) => {
-			target.contents = buffer;
-			return target;
 		});
+
+		return target;
 	}
 
 	/**
 	 * Add postfix to image file name.
-	 * @param {Vinyl}           target
-	 * @param {Number}          calculatedWidth
-	 * @param {Number}          width
-	 * @param {String|Function} customPostfix
+	 * @param  {Vinyl}           target          Image file to add postfix.
+	 * @param  {Number}          calculatedWidth Calculated width of image.
+	 * @param  {Number}          width           Aspect ratio multiplier of image.
+	 * @param  {String|Function} customPostfix   Custom postfix generator.
+	 * @return {void}
 	 */
 	_addPostfix(target, calculatedWidth, width, customPostfix = false) {
 
