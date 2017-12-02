@@ -15,9 +15,8 @@
 
 Highly customizable plugin to generating responsive images.
 
-# Getting Started
+# Install
 
-Install with npm
 ```bash
 npm i -D gulp-srcset
 # or
