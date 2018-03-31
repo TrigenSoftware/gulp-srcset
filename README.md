@@ -103,6 +103,12 @@ Option to skip optimization.
 
 Default: `false`
 
+#### `Boolean rule.scalingUp`
+
+Generate or not images with higher width than they's sources are.
+
+Default: `true`
+
 ### `Object options`
 
 Object with common config.
@@ -154,6 +160,12 @@ Default:
 Option to skip optimization.
 
 Default: `false`
+
+#### `Boolean options.scalingUp`
+
+Generate or not images with higher width than they's sources are.
+
+Default: `true`
 
 # Example 
 [`gulpfile.js`](https://github.com/TrigenSoftware/gulp-srcset/tree/master/example)

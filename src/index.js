@@ -12,7 +12,8 @@ export default function plugin(rules = [], inputOptions = {}) {
 		processing:       false,
 		optimization:     false,
 		postfix:          false,
-		skipOptimization: false
+		skipOptimization: false,
+		scalingUp:        true
 	}, inputOptions);
 
 	const srcset = new SrcsetGenerator(options);
@@ -24,6 +25,8 @@ export default function plugin(rules = [], inputOptions = {}) {
 			return;
 		}
 
+		const push = this.push.bind(this);
+
 		try {
 
 			const results = await Promise.all(
@@ -32,7 +35,7 @@ export default function plugin(rules = [], inputOptions = {}) {
 					const matches = await srcset.matchImage(file, rule.match);
 
 					if (matches) {
-						await srcset.generate(file, rule, this.push.bind(this));
+						await srcset.generate(file, rule, push);
 						return true;
 					}
 

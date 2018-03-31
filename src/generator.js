@@ -58,12 +58,19 @@ export default class SrcsetGenerator {
 	postfix = (width, mul) => (mul === 1 ? '' : `@${width}w`);
 
 	skipOptimization = false;
+	scalingUp = true;
 
 	constructor(config = {}) {
 
 		if (typeof config == 'object') {
 
-			const { processing, optimization, postfix, skipOptimization } = config;
+			const {
+				processing,
+				optimization,
+				postfix,
+				skipOptimization,
+				scalingUp
+			} = config;
 
 			Object.assign(this.processing, processing);
 			Object.assign(this.optimization, optimization);
@@ -74,6 +81,10 @@ export default class SrcsetGenerator {
 
 			if (typeof skipOptimization == 'boolean') {
 				this.skipOptimization = skipOptimization;
+			}
+
+			if (typeof scalingUp == 'boolean') {
+				this.scalingUp = scalingUp;
 			}
 		}
 	}
@@ -97,7 +108,8 @@ export default class SrcsetGenerator {
 			postfix:          false,
 			processing:       false,
 			optimization:     false,
-			skipOptimization: this.skipOptimization
+			skipOptimization: this.skipOptimization,
+			scalingUp:        this.scalingUp
 		}, _config);
 
 		const { TypeIsSupported, Extensions } = SrcsetGenerator,
@@ -131,9 +143,13 @@ export default class SrcsetGenerator {
 			widths.push(1);
 		}
 
-		const { skipOptimization } = config,
-			onlyOptimize = Extensions.svg.test(sourceType)
-				|| Extensions.gif.test(sourceType);
+		const {
+			skipOptimization,
+			scalingUp
+		} = config;
+
+		const onlyOptimize = Extensions.svg.test(sourceType)
+			|| Extensions.gif.test(sourceType);
 
 		const processors = outputTypes.map(async (type) => {
 
@@ -160,6 +176,10 @@ export default class SrcsetGenerator {
 				}
 
 				let image = await this._attachMetadata(source);
+
+				if (!scalingUp && image.metadata.width < width) {
+					return null;
+				}
 
 				image = await this._processImage(image, type, width, config);
 
@@ -205,7 +225,10 @@ export default class SrcsetGenerator {
 
 		await this._attachMetadata(source);
 
-		const { metadata, path } = source;
+		const {
+			metadata,
+			path
+		} = source;
 
 		if (typeof metadata != 'object') {
 			return false;

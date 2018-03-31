@@ -1,6 +1,6 @@
 {
   "name": "gulp-srcset",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Highly customizable plugin to generating responsive images.",
   "author": "dangreen",
   "license": "MIT",
@@ -49,8 +49,8 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
     "escope": "^3.6.0",
-    "eslint": "^4.12.1",
-    "eslint-config-trigen": "^2.3.0",
+    "eslint": "^4.19.1",
+    "eslint-config-trigen": "^2.4.0",
     "rollup": "^0.52.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
