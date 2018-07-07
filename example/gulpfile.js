@@ -1,5 +1,6 @@
-const gulp = require('gulp'),
-	srcset = require('../lib/index');
+/* eslint-disable */
+const gulp = require('gulp');
+const srcset = require('../lib/index');
 
 gulp.task('images', () =>
 	gulp.src('src/*.{jpg,png,gif,ico}')
