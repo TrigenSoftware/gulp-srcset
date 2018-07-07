@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Code-style fixes.
 - `package.babel` -> `.babelrc`.
 - `.eslintrc.js` -> `.eslintrc`.
-- 'src/generator.js' -> `@flexis/srcset`.
+- `src/generator.js` -> `@flexis/srcset`.
 
 ## [1.2.1] - 2018-03-31
 ### Changed
