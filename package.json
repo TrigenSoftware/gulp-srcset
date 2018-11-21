@@ -32,15 +32,15 @@
     "responsive"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.49",
+    "@babel/runtime": "<=7.0.0-beta.49",
     "@flexis/srcset": "^1.0.1",
     "through2-concurrent": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.52",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.49",
-    "@babel/preset-env": "^7.0.0-beta.49",
-    "@babel/preset-stage-0": "^7.0.0-beta.49",
+    "@babel/core": "<=7.0.0-beta.52",
+    "@babel/plugin-transform-runtime": "<=7.0.0-beta.49",
+    "@babel/preset-env": "<=7.0.0-beta.49",
+    "@babel/preset-stage-0": "<=7.0.0-beta.49",
     "eslint": "^5.0.1",
     "eslint-config-trigen": "^3.2.0",
     "husky": "^1.0.0-rc.10",
