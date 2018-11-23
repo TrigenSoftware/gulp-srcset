@@ -3,6 +3,7 @@
 [![NPM version][npm]][npm-url]
 [![Node version][node]][node-url]
 [![Dependency status][deps]][deps-url]
+[![Greenkeeper badge][greenkeeper]][greenkeeper-url]
 
 [npm]: https://img.shields.io/npm/v/gulp-srcset.svg
 [npm-url]: https://www.npmjs.com/package/gulp-srcset
