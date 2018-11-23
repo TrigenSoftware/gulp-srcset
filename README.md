@@ -68,13 +68,13 @@ Object with [Sharp configs](http://sharp.readthedocs.io/en/stable/api-output/) f
 Default:
 ```js
 {
-	webp: {
-		quality: 100
-	},
-	jpg: {
-		quality: 100
-	},
-	png: {}
+    webp: {
+        quality: 100
+    },
+    jpg: {
+        quality: 100
+    },
+    png: {}
 }
 ```
 
@@ -85,15 +85,15 @@ Object with [imagemin](https://www.npmjs.com/package/imagemin) plugins for each 
 Default:
 ```js
 {
-	webp: webpPlugin({
-		quality: 100
-	}),
-	jpg:  mozJpegPlugin({
-		quality: 100
-	}),
-	png:  zopfliPlugin(),
-	gif:  gifLossyPlugin(),
-	svg:  svgoPlugin()
+    webp: webpPlugin({
+        quality: 100
+    }),
+    jpg:  mozJpegPlugin({
+        quality: 100
+    }),
+    png:  zopfliPlugin(),
+    gif:  gifLossyPlugin(),
+    svg:  svgoPlugin()
 }
 ```
 
@@ -126,13 +126,13 @@ Object with [Sharp configs](http://sharp.readthedocs.io/en/stable/api-output/) f
 Default:
 ```js
 {
-	webp: {
-		quality: 100
-	},
-	jpg: {
-		quality: 100
-	},
-	png: {}
+    webp: {
+        quality: 100
+    },
+    jpg: {
+        quality: 100
+    },
+    png: {}
 }
 ```
 
@@ -143,15 +143,15 @@ Object with [imagemin](https://www.npmjs.com/package/imagemin) plugins for each 
 Default:
 ```js
 {
-	webp: webpPlugin({
-		quality: 100
-	}),
-	jpg:  mozJpegPlugin({
-		quality: 100
-	}),
-	png:  zopfliPlugin(),
-	gif:  gifLossyPlugin(),
-	svg:  svgoPlugin()
+    webp: webpPlugin({
+        quality: 100
+    }),
+    jpg:  mozJpegPlugin({
+        quality: 100
+    }),
+    png:  zopfliPlugin(),
+    gif:  gifLossyPlugin(),
+    svg:  svgoPlugin()
 }
 ```
 
@@ -173,13 +173,13 @@ const gulp = require('gulp');
 const srcset = require('gulp-srcset');
 
 gulp.task('images', () =>
-	gulp.src('src/*.{jpg,png,gif}')
-		.pipe(srcset([{
-			match:  '(min-width: 3000px)',
-			width:  [1, 1920, 1280, 720, 560, 320],
-			format: ['jpg', 'webp']
-		}]))
-		.pipe(gulp.dest('dist'))
+    gulp.src('src/*.{jpg,png,gif}')
+        .pipe(srcset([{
+            match:  '(min-width: 3000px)',
+            width:  [1, 1920, 1280, 720, 560, 320],
+            format: ['jpg', 'webp']
+        }]))
+        .pipe(gulp.dest('dist'))
 );
 ```
 
