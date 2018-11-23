@@ -13,6 +13,9 @@
 [deps]: https://img.shields.io/david/TrigenSoftware/gulp-srcset.svg
 [deps-url]: https://david-dm.org/TrigenSoftware/gulp-srcset
 
+[greenkeeper]: https://badges.greenkeeper.io/TrigenSoftware/gulp-srcset.svg
+[greenkeeper-url]: https://greenkeeper.io/
+
 Highly customizable plugin to generating responsive images.
 
 ## Install
@@ -184,4 +187,4 @@ gulp.task('images', () =>
 ```
 
 ---
-[![NPM](https://nodei.co/npm/gulp-srcset.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gulp-srcset/) [![Greenkeeper badge](https://badges.greenkeeper.io/TrigenSoftware/gulp-srcset.svg)](https://greenkeeper.io/)
+[![NPM](https://nodei.co/npm/gulp-srcset.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gulp-srcset/)
