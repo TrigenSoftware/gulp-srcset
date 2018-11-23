@@ -1,10 +1,19 @@
 import { cpus } from 'os';
+import Vinyl from 'vinyl';
 import through from 'through2-concurrent';
 import SrcsetGenerator, { matchImage } from '@flexis/srcset';
 
 const throughOptions = {
 	maxConcurrency: cpus().length
 };
+
+function toVinyl(source) {
+	return Vinyl.isVinyl(source)
+		? source
+		: source.isBuffer && source.isStream && source.isNull
+			? new Vinyl(source)
+			: source;
+}
 
 export default function plugin(rules = [], inputOptions = {}) {
 
@@ -24,16 +33,18 @@ export default function plugin(rules = [], inputOptions = {}) {
 			return;
 		}
 
+		const vinylFile = toVinyl(file);
+
 		try {
 
 			const results = await Promise.all(
 				rules.map(async (rule) => {
 
-					const matches = await matchImage(file, rule.match);
+					const matches = await matchImage(vinylFile, rule.match);
 
 					if (matches) {
 
-						const images = srcset.generate(file, rule);
+						const images = srcset.generate(vinylFile, rule);
 
 						for await (const image of images) {
 							this.push(image);
@@ -47,7 +58,7 @@ export default function plugin(rules = [], inputOptions = {}) {
 			);
 
 			if (results.every(_ => !_)) {
-				next(null, file);
+				next(null, vinylFile);
 				return;
 			}
 
