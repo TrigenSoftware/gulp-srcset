@@ -184,4 +184,4 @@ gulp.task('images', () =>
 ```
 
 ---
-[![NPM](https://nodei.co/npm/gulp-srcset.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gulp-srcset/)
+[![NPM](https://nodei.co/npm/gulp-srcset.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gulp-srcset/) [![Greenkeeper badge](https://badges.greenkeeper.io/TrigenSoftware/gulp-srcset.svg)](https://greenkeeper.io/)
