@@ -3,6 +3,7 @@
 [![NPM version][npm]][npm-url]
 [![Node version][node]][node-url]
 [![Dependency status][deps]][deps-url]
+[![Build status][build]][build-url]
 [![Greenkeeper badge][greenkeeper]][greenkeeper-url]
 
 [npm]: https://img.shields.io/npm/v/gulp-srcset.svg
@@ -13,6 +14,9 @@
 
 [deps]: https://img.shields.io/david/TrigenSoftware/gulp-srcset.svg
 [deps-url]: https://david-dm.org/TrigenSoftware/gulp-srcset
+
+[build]: http://img.shields.io/travis/TrigenSoftware/gulp-srcset.svg
+[build-url]: https://travis-ci.org/TrigenSoftware/gulp-srcset
 
 [greenkeeper]: https://badges.greenkeeper.io/TrigenSoftware/gulp-srcset.svg
 [greenkeeper-url]: https://greenkeeper.io/
