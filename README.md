@@ -129,7 +129,7 @@ Default:
 }
 ```
 
-##### `options.skipOptimization: boolean``
+##### `options.skipOptimization: boolean`
 
 Option to skip optimization.
 
