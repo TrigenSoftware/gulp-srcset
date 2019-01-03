@@ -33,21 +33,21 @@ yarn add -D gulp-srcset
 
 ## API
 
-### `gulpSrcsetPlugin(rules [, options])`
+### `gulpSrcsetPlugin(rules: object[], options?: object)`
 
-#### `Array<Object rule> rules`
+#### `rules: object[]`
 
 Array of rules to generate variants of image.
 
-##### `String|Function|Array<String|Function> rule.match`
+##### `rule.match: string|Function|(String|Function)[]`
 
 There is support of 3 types of matchers:
 
 1. Glob pattern of file path/name.
 2. Media query to match image by size.
-3. Function with `path`, `size` and `file` arguments, where `path` is String, `size` is object `{ width, height }` and `file` is instance of `Vinyl`.
+3. Function with `path`, `size` and `file` arguments, where `path` is `string`, `size` is `{ width: nunber, height: number }` and `file` is instance of `Vinyl`.
 
-##### `Number|Array<Number> rule.width`
+##### `rule.width: number|number[]`
 
 Target widths to generate, value less or equal 1 will be detected as multiplier.
 
@@ -55,79 +55,45 @@ Target widths to generate, value less or equal 1 will be detected as multiplier.
 
 Default: `[1]`
 
-##### `String|Array<String> rule.format`
+##### `rule.format: string|string[]`
 
-Target formats to generate, supports: `"svg"`, `"gif"`, `"jpeg"`, `"png"` and `"webp"`.
+Target formats to generate, supports: `'svg'`, `'gif'`, `'jpeg'`, `'png'` and `'webp'`.
 
-For converting are available only `"jpeg"`, `"png"` and `"webp"`.
+For converting are available only `'jpeg'`, `'png'` and `'webp'`.
 
 Default: ```[`format of source image`]```
 
-##### `String rule.postfix(Number calculatedWidth, Number width)`
+##### `rule.postfix`
 
-Function to generate postfix for file name.
+Same as [`postfix` option](#optionspostfix-calculatedwidth-number-width-number-format-string--string).
 
-Default: ```(calculatedWidth, width) => width == 1 ? '' : `@${calculatedWidth}w` ```
+##### `rule.processing`
 
-##### `Object rule.processing`
+Same as [`processing` option](#optionsprocessing-object).
 
-Object with [Sharp configs](http://sharp.readthedocs.io/en/stable/api-output/) for each supported format. Sharp used as tool for resizing and converting images.
+##### `rule.optimization`
 
-Default:
-```js
-{
-    webp: {
-        quality: 100
-    },
-    jpg: {
-        quality: 100
-    },
-    png: {}
-}
-```
+Same as [`optimization` option](#optionsoptimization-object).
 
-##### `Object rule.optimization`
+##### `rule.skipOptimization`
 
-Object with [imagemin](https://www.npmjs.com/package/imagemin) plugins for each format. Imagemin used as tool for images optimization.
+Same as [`skipOptimization` option](#optionsskipoptimization-boolean).
 
-Default:
-```js
-{
-    webp: webpPlugin({
-        quality: 100
-    }),
-    jpg:  mozJpegPlugin({
-        quality: 100
-    }),
-    png:  zopfliPlugin(),
-    gif:  gifLossyPlugin(),
-    svg:  svgoPlugin()
-}
-```
+##### `rule.scalingUp`
 
-##### `Boolean rule.skipOptimization`
+Same as [`scalingUp` option](#optionsscalingup-boolean).
 
-Option to skip optimization.
-
-Default: `false`
-
-##### `Boolean rule.scalingUp`
-
-Generate or not images with higher width than they's sources are.
-
-Default: `true`
-
-#### `Object options`
+#### `options: object`
 
 Object with common config.
 
-##### `String options.postfix(Number calculatedWidth, Number width)`
+##### `options.postfix: (calculatedWidth: number, width: number, format: string) => string`
 
 Function to generate postfix for file name.
 
-Default: ```(calculatedWidth, width) => width == 1 ? '' : `@${calculatedWidth}w` ```
+Default: ```(width, mul, format) => mul == 1 ? '' : `@${width}w` ```
 
-##### `Object options.processing`
+##### `options.processing: object`
 
 Object with [Sharp configs](http://sharp.readthedocs.io/en/stable/api-output/) for each supported format. Sharp used as tool for resizing and converting images.
 
@@ -144,7 +110,7 @@ Default:
 }
 ```
 
-##### `Object options.optimization`
+##### `options.optimization: object`
 
 Object with [imagemin](https://www.npmjs.com/package/imagemin) plugins for each format. Imagemin used as tool for images optimization.
 
@@ -163,13 +129,13 @@ Default:
 }
 ```
 
-##### `Boolean options.skipOptimization`
+##### `options.skipOptimization: boolean``
 
 Option to skip optimization.
 
 Default: `false`
 
-##### `Boolean options.scalingUp`
+##### `options.scalingUp: boolean`
 
 Generate or not images with higher width than they's sources are.
 
