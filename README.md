@@ -15,8 +15,8 @@
 [deps]: https://img.shields.io/david/TrigenSoftware/gulp-srcset.svg
 [deps-url]: https://david-dm.org/TrigenSoftware/gulp-srcset
 
-[build]: http://img.shields.io/travis/TrigenSoftware/gulp-srcset.svg
-[build-url]: https://travis-ci.org/TrigenSoftware/gulp-srcset
+[build]: http://img.shields.io/travis/com/TrigenSoftware/gulp-srcset.svg
+[build-url]: https://travis-ci.com/TrigenSoftware/gulp-srcset
 
 [greenkeeper]: https://badges.greenkeeper.io/TrigenSoftware/gulp-srcset.svg
 [greenkeeper-url]: https://greenkeeper.io/
