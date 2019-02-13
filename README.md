@@ -39,7 +39,7 @@ yarn add -D gulp-srcset
 
 Array of rules to generate variants of image.
 
-##### `rule.match: string|Function|(String|Function)[]`
+##### `rule.match: string|Function|(string|Function)[]`
 
 There is support of 3 types of matchers:
 
