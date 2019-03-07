@@ -42,7 +42,7 @@
     "@babel/core": "7.2.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
-    "babel-preset-trigen": "^1.8.0",
+    "babel-preset-trigen": "^2.0.0",
     "browserslist-config-trigen": "^1.1.0",
     "clean-publish": "^1.1.0",
     "eslint": "^5.11.1",
