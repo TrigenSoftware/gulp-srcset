@@ -1,0 +1,20 @@
+{
+  "generator-trigen-lib": {
+    "editPackage": true,
+    "pkg": {
+      "name": "gulp-srcset",
+      "version": "2.1.1",
+      "description": "Highly customizable plugin to generating responsive images.",
+      "repository": "https://github.com/TrigenSoftware/gulp-srcset",
+      "author": "dangreen"
+    },
+    "type": "node",
+    "lang": "babel",
+    "rollup": true,
+    "jest": true,
+    "coverage": false,
+    "publishAsRoot": false,
+    "cleanPublish": true,
+    "checkSize": true
+  }
+}

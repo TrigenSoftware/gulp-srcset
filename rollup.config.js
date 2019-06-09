@@ -1,36 +1,30 @@
+import {
+	external
+} from '@trigen/scripts-plugin-rollup/helpers';
+import { eslint } from 'rollup-plugin-eslint';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
-import { eslint } from 'rollup-plugin-eslint';
 import pkg from './package.json';
 
 const plugins = [
 	eslint({
 		exclude:      ['**/*.json', 'node_modules/**'],
-		throwOnError: process.env.ROLLUP_WATCH != 'true'
+		throwOnError: true
 	}),
 	commonjs(),
 	babel({
 		runtimeHelpers: true
 	})
 ];
-const dependencies = [].concat(
-	['os'],
-	Object.keys(pkg.dependencies)
-);
-
-function external(id) {
-	return dependencies.some(_ =>
-		_ == id || id.indexOf(`${_}/`) == 0
-	);
-}
 
 export default {
-	input:  'src/index.js',
+	input:    'src/index.js',
 	plugins,
-	external,
-	output: {
+	external: external(pkg, true),
+	output:   {
 		file:      pkg.main,
 		format:    'cjs',
+		exports:   'named',
 		sourcemap: 'inline'
 	}
 };
