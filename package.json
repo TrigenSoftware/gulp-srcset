@@ -49,7 +49,7 @@
     "@trigen/scripts-preset-lib": "2",
     "eslint-plugin-jest": "^22.6.4",
     "gulp": "^4.0.2",
-    "rollup-plugin-eslint": "^6.0.0"
+    "rollup-plugin-eslint": "^7.0.0"
   },
   "files": [
     "lib"
