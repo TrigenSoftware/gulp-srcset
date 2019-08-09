@@ -21,7 +21,6 @@
 [dependabot]: https://api.dependabot.com/badges/status?host=github&repo=TrigenSoftware/gulp-srcset
 [dependabot-url]: https://dependabot.com/
 
-
 Highly customizable plugin for generating responsive images.
 
 - [Responsive images](https://developer.mozilla.org/ru/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images) 🌠
