@@ -24,6 +24,10 @@ DO NOT TOUCH. SAVE IT ON TOP.
 
 -->
 
+## [2.3.0] - 2019-08-09
+### Changed
+- Use `@flexis/srcset/lib/stream`.
+
 ## [2.2.0] - 2019-06-09
 ### Added
 - `trigen-scripts` dev tool.
