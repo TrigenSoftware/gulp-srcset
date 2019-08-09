@@ -920,10 +920,10 @@
     puppeteer "^1.2.0"
     yargs "^11.1.0"
 
-"@flexis/srcset@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@flexis/srcset/-/srcset-1.4.0.tgz#a8f827c4d1a42b6a933dcc2ae70eec75d1fbd60b"
-  integrity sha512-cBTxxRRMWMk9F0YVfq371BkEvKT6AmnZrtK2S36xXGyVolhvBtaUuPJaR5AR/Q5OCEOhI1P3pG+tIqXwxTCnyg==
+"@flexis/srcset@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@flexis/srcset/-/srcset-1.4.1.tgz#911aabd5aeace358942f7a03fd4ce3733f542bc1"
+  integrity sha512-bSBwDljOAWUnn8GD+jfdBCzbvSgVlkXQOzsbLywA4R67yjkpPI72maiPMVM7a45V6d6SwJr+LkmtcD+ayOHd6Q==
   dependencies:
     "@babel/runtime" "^7.5.5"
     "@types/minimatch" "^3.0.3"
