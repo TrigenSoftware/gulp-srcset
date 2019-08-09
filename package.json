@@ -17,7 +17,6 @@
   },
   "scripts": {
     "lint": "trigen-scripts lint",
-    "jest": "trigen-scripts jest",
     "checkSize": "trigen-scripts checkSize",
     "test": "trigen-scripts test",
     "start": "trigen-scripts start",
