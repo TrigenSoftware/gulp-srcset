@@ -35,7 +35,7 @@
     "@flexis/srcset": "^1.4.1"
   },
   "devDependencies": {
-    "@trigen/scripts": "2.6.3",
+    "@trigen/scripts": "2.7.0",
     "@trigen/scripts-plugin-babel": "2.6.3",
     "@trigen/scripts-plugin-eslint": "2.6.3",
     "@trigen/scripts-plugin-rollup": "2.4.0",
