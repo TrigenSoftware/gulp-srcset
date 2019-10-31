@@ -1087,10 +1087,10 @@
     eslint "^5.15.3"
     eslint-config-trigen "^3.2.3"
 
-"@trigen/scripts-plugin-rollup@2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-rollup/-/scripts-plugin-rollup-2.7.0.tgz#7703aef025fb436f764187a9696dee3e48599d0d"
-  integrity sha512-ZGqkfGbQ1k0L3HeN92JzgbnHSBeoj/XAZEs87HLEVwd+ysTPpEthyToDtHzc5mhNDXaKXbuh4CNh8ozPL/W0xQ==
+"@trigen/scripts-plugin-rollup@3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-rollup/-/scripts-plugin-rollup-3.5.0.tgz#6c75eab64a658794ea6563a4d30196c1d3e2c842"
+  integrity sha512-NT+J8ITn3C3nU3mumBKtKAcSr/Z7cJNtTFudcIHuY7saEToh2ssQqPfstBQbtHImX3ZGmVDQTPNq1lYSKVhDdw==
   dependencies:
     builtin-modules "*"
     rollup "^1.13.0"
