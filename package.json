@@ -32,7 +32,7 @@
     "gulpplugin"
   ],
   "dependencies": {
-    "@flexis/srcset": "^1.4.1"
+    "@flexis/srcset": "^2.0.0"
   },
   "devDependencies": {
     "@trigen/scripts": "2.7.0",
