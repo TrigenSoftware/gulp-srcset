@@ -2,7 +2,6 @@
 	{
 		"path": "lib/index.js",
 		"limit": "1 KB",
-		"webpack": false,
-		"running": false
+		"webpack": false
 	}
 ]
