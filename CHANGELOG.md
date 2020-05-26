@@ -24,6 +24,10 @@ DO NOT TOUCH. SAVE IT ON TOP.
 
 -->
 
+## [3.0.0] - 2020-05-26
+### Breaking
+- Requires `Node 10+`
+
 ## [2.3.0] - 2019-08-09
 ### Changed
 - Use `@flexis/srcset/lib/stream`.
