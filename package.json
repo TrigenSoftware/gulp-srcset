@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "@babel/runtime-corejs3": "^7.9.6",
-    "@flexis/srcset": "^2.0.0"
+    "@flexis/srcset": "^4.0.0"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.5.0",
